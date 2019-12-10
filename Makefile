@@ -7,7 +7,7 @@ all: thesis
 
 thesis:
 	$(TEX) thesis.tex
-	#$(BIB) thesis
+	$(BIB) thesis
 	$(TEX) thesis.tex
 	$(TEX) thesis.tex
 
