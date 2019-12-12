@@ -5,14 +5,291 @@ LIP, variable height CoM. MPC (BHuman implementation). Cite
 \section{LIP}
 Where it comes from, proofs and prev. works.
 
-\section{3D Linear Model (const height CoM)}
-Todo.
+3D CoM dynamics.
+
+Moment balance around ZMP for the $x$ coordinate:
+\begin{equation}
+  (z_c - z_z) \ddot{x}_c = (\ddot{z}_c + g) (x_c + x_z)
+\end{equation}
+where $g$ is the gravity acceleration. Identical for $y$. Dynamics of $x$, $y$
+coordinates of the CoM:
+\begin{align}
+  \ddot{x}_c &= \frac{\ddot{z}_c + g}{z_c - z_z} (x_c - x_z) \\
+  \ddot{y}_c &= \frac{\ddot{z}_c + g}{z_c - z_z} (y_c - y_z)
+\end{align}
+Force balance along $z$ axis leads to structurally different dynamics for the 
+corresponding coordinate:
+\begin{equation}
+  \ddot{z}_c = \frac{f_z}{m} - g
+\end{equation}
+where $f_z$ denotes the z-component of the ground reaction force (GRF), acting 
+as an external input, and $m$ is the total mass of the humanoid.
+SEE KAJITA HERE.
+
+Condition for maintaining balance is that CoP is internal to SP. Since CoP, CoM,
+ZMP are colinear, the condition is equivalent to the ZMP being internal to the 
+polyhedral cone having CoM as vertex and SP as cross-section (Fig. 2 SYROCO18).
+
+3D Linear Model (const height CoM) SECTION:
+
+MAYBE MERGE THIS SECTION WITH THE PREV USING THEORY FROM KAJITA?
+
+3D motion model of prev. section nonlinear, difficult to use for gait
+generation. Usual way to make the model linear is to assume ground fully 
+horizontal and CoM over the ground const, as a consequence $z_z = 0$, hence 
+ZMP coincident with CoP. \textbf{LIP}:
+\begin{align}
+  \ddot{x}_c &= \omega_0^2 (x_c - x_z) \\
+  \ddot{y}_c &= \omega_0^2 (y_c - y_z)
+\end{align}
+where $\omega_0^2 = g/\bar{z}_c$. 2D LINEAR MODEL NOT APPROPRIATE FOR GAIT
+GENERATION OVER UNEVEN TERRAIN.
 
 \section{3D Linear Model (variable height CoM)}
-Todo.
+
+However, requiring CoM move at const height is not the only way to make the 
+system linear. A more general way is to constraint its vertical motion so that:
+\begin{equation}
+  \frac{\ddot{z}_c + g}{z_c - z_z} = \omega^2
+\end{equation}
+with $\omega$ arbitrary const. LIP model can be seen as a particular case in
+which $\omega^2 = \omega_0^2$. Using the above, eqs. CoM dynamics become:
+\begin{align}
+  \ddot{x}_c &= \omega^2 (x_c - x_z) \\
+  \ddot{y}_c &= \omega^2 (y_c - y_z)
+\end{align}
+whereas the dynamics of $z_c$ is directly derived from the constraint itself:
+\begin{equation}
+  \ddot{z}_c = \omega^2 (z_c - z_z) - g
+\end{equation}
+
+The above dynamic equations are linear and have a clear LIP structure with 
+ZMP coordinates $(x_z, y_z, z_z)$ acting as control inputs. THIS 3D MODEL 
+ALLOWS VERTICAL MOTION OF THE COM AND THEREFORE CAN BE USED FOR GAIT GENERATION 
+ON UNEVEN TERRAIN, IN CONJUNCTION WITH THE BALANCE CONDITION ILLUSTRATED IN 
+FIG. 2 (SYROCO18).
+
+DOUBLE CHECK NOTES ON SYROCO18 SEC. 2.2 PAGE 395.
 
 \section{MPC Formulation + Algorithm}
 Proofs as in report.pdf in order to easily introduce QP problem.
+
+Assuming footstep sequence in given in advance: MPC scheme based on 3D model 
+introduce above. Eqs. include an unstable subsystem, taken care by adding
+stability constraint. Extends IS-MPC Scianca
+\cite{DBLP:conf/humanoids/SciancaCSLO16}.
+
+3.1. Motion Model
+
+Dynamic extension: choose control variable as ZMP velocity $\dot{x}_z$ instead
+of ZMP itself. On the x axis:
+\begin{equation}
+  \begin{pmatrix}
+    \dot{x}_c \\
+    \ddot{x}_c \\
+    \dot{x}_z
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    0 & 1 & 0 \\
+    \omega^2 & 0 & -\omega^2 \\
+    0 & 0 & 0
+  \end{pmatrix}
+  \begin{pmatrix}
+    x_c \\
+    \dot{x}_c \\
+    x_z
+  \end{pmatrix}
+  +
+  \begin{pmatrix}
+    0 \\
+    0 \\
+    1
+  \end{pmatrix}
+  \dot{x}_z
+\end{equation}
+Dynamics are the same along three axes with additive term along z axis.
+
+Using piecewise-constant control inputs over sampling intervals of duration 
+$\delta$, with a prediction horizon $T_h = N \dot \delta$. Current time instant
+$t_k$, successive instants within prediction horizon $t_k+i, i = 1, \dots, N$.
+Similar notation for other variables. At a generic isntant $t_j$:
+\begin{equation}
+  \dot{x}_z(t) = \dot{x}_z^j, t \in [t_j, t_{j+1})
+\end{equation}
+so that the ZMP x-position in the time interval $[t_j, t_{j+1}]$ is:
+\begin{equation}
+  x_z(t) = x_z^j + (t - t_j) \dot{x}_z^j, t \in [t_j, t_{j+1}]
+\end{equation}
+
+3.2. ZMP constraints
+
+2D case first. ZMP inside the SP. $(x_f^j, y_f^j, \theta_f^j)$ pose of the 
+generic footstep within assigned sequence. Fixed-shape moving ZMP constraint to
+enforce balance. Admissible region for ZMP at $t_{k+i}$ is centered in 
+$(x_f^{k+i}, y_f^{k+i})$ and has orientation $\theta_f^{k+i}$.
+
+SS: $(x_f^{k+i}, y_f^{k+i}, \theta_f^{k+i})$ coincide with the pose of the 
+support foot, hence, $(x_f^j, y_f^j, \theta_f^j)$.
+
+DS: $(x_f^{k+i}, y_f^{k+i}, \theta_f^{k+i})$ gradually slide from the position 
+and orientation of the previous support foot to those of the next. [NOT 
+STRICTLY NECESSARY, DOUBLE CHECK IN IMPLEMENTATION AS WELL].
+
+ZMP constraint in 2D:
+\begin{equation}
+  \label{eq:zmp-constraint-2d}
+  -\frac{1}{2}
+  \begin{pmatrix}
+    d_x^\text{z} \\
+    d_y^\text{z}
+  \end{pmatrix}
+  \le
+  R_{k+i}^T
+  \begin{pmatrix}
+    x_z^{k+i} - x_f^{k+i} \\
+    y_z^{k+i} - y_f^{k+i}
+  \end{pmatrix}
+  \le
+  \frac{1}{2}
+  \begin{pmatrix}
+    d_x^\text{z} \\
+    d_y^\text{z}
+  \end{pmatrix}
+\end{equation}
+where $d_x^\text{z}$ and $d_y^\text{z}$ are the dimensions of the rectangular
+constraint region and $R_{k+i}^T$ is the rotation matrix associated with
+$\theta_f^{k+i}$. Note that $(x_z^{k+i}, y_z^{k+i})$ is the predicted position
+of the ZMP, which can be expressed as a linear combination of the control
+variables:
+\begin{equation}
+  \label{eq:piecewise-linear-zmp-trajectory}
+  x_z^{k+i} = x_z^k + \delta \sum_{i=0}^{i-1} \dot{x}_z^{k+j}
+\end{equation}
+Eq. \eqref{eq:zmp-constraint-2d} must be imposed for $i = 1, \dots, N$.
+
+ZMP constraint in 3D:
+ZMP is allowed to leave the ground in order to generate vertical CoM motions,
+balance condition now requires ZMP to remain inside polyhedral cone defined 
+by SP and CoM. When ZMP is allowed to move vertically, the cone defines a 
+nonlinear constraint. In order to remove nonlinearity, box constraint:
+\begin{equation}
+  \label{eq:zmp-constraint-3d}
+  -\frac{1}{2}
+  \begin{pmatrix}
+    \tilde{d}_x^\text{z} \\
+    \tilde{d}_y^\text{z} \\
+    d_z^\text{z}
+  \end{pmatrix}
+  \le
+  R_{k+i}^T
+  \begin{pmatrix}
+    x_z^{k+i} - x_f^{k+i} \\
+    y_z^{k+i} - y_f^{k+i} \\
+    z_z^{k+i} - y_f^{k+i}
+  \end{pmatrix}
+  \le
+  \frac{1}{2}
+  \begin{pmatrix}
+    \tilde{d}_x^\text{z} \\
+    \tilde{d}_y^\text{z} \\
+    d_z^\text{z}
+  \end{pmatrix}
+\end{equation}
+where $d_z^\text{z}$ defines the maximum allowed vertical ZMP displacement
+w.r.t. the horizontal patch. To guarantee that the box is consteind in the cone:
+\begin{equation}
+  \tilde{d}_x^\text{z} = d_x^\text{z} \left( 1 -
+      \frac{d_z^\text{z}}{2z_c^{\min}} \right)
+      - \frac{d_z^\text{z}}{z_c^{\min}}\Delta x_c
+\end{equation}
+where $\Delta x_c$ max expected displacement of CoM w.r.t. center of support 
+foot and $z_c^{\min}$ is the minimum expected value for CoM height.
+Analogous for $\tilde{d}_y^\text{z}$.
+
+Similarly to 2D case, box constraint kept fixed during SS. During DS box 
+slide linearly from its position around the previous support foot to its 
+position around the next support foot, thus, always remaining within the 
+polyhedral cone which defines the ZMP balance constraint (Fig. 5 SYROCO18).
+
+3.3. Stability constraint
+
+Motion model unstable, generic solution diverges making components of CoM 
+unbounded w.r.t. ZMP position, generated gait infeasible.
+In \cite{DBLP:conf/humanoids/SciancaCSLO16} it was shown (TODO: report proof 
+here) that if the initial condition $(x_c^k, \dot{x}_c^k)$ satisfies:
+\begin{equation}
+  \label{eq:stability-condition-xc}
+  x_c^k + \frac{\dot{x}_c^k}{\omega} = \omega \int_{t_k}^\infty 
+      e^{-\omega(\tau-t_k)}x_z(\tau)d\tau
+\end{equation}
+then the solution of $x_c$ dynamics (TODO: eqref) remains bounded for all
+$t$. Similar for $y_c$ dynamics. Regarding $z_c$:
+\begin{equation}
+  \label{eq:stability-condition-zc}
+  z_c^k + \frac{\dot{z}_c^k}{\omega} = \frac{g}{\omega^2} +
+      \omega \int_{t_k}^\infty e^{\omega(\tau-t_k)}z_z(\tau)d\tau
+\end{equation}
+
+MPC formulation, stability condition \eqref{eq:stability-condition-xc} can be 
+enforced by writing it as a constraint on the control variables
+$\dot{x}_z^{k+i}$:
+\begin{equation}
+  \label{eq:stability-constraint-xdot}
+  \frac{1}{\omega}\frac{1-e^{-\delta\omega}}{1-e^{-N\delta\omega}}
+    \sum_{i=0}^{N-1} e^{-i\delta\omega} \dot{x}_z^{k+i} =
+    x_c^k + \frac{\dot{x}_c^k}{\omega} - x_z^k
+\end{equation}
+(using integral eqref{eq:stability-condition-xc} + piecewise linear ZMP trajectory
+\eqref{eq:piecewise-linear-zmp-trajectory} + infinite replication). TODO:
+infinite replication proof here.
+
+Stability constraint on $z_c$ derived from \eqref{eq:stability-condition-zc}:
+\begin{equation}
+  \label{eq:stability-constraint-zdot}
+  \frac{1-e^{-\delta\omega}}{1-e^{-N\delta\omega}}
+    \sum_{i=0}^{N-1} e^{-i\delta\omega} \dot{z}_z^{k+i} =
+    z_c^k + \frac{\dot{z}_c^k}{\omega} - z_z^k - \frac{g}{\omega^2}
+\end{equation}
+where $\dot{z}_z$ is set to zero beyond prediction horizon (TODO: proof here).
+
+4. MPC Algorithm
+
+MPC algorithm which solves QP problem at each iteration.
+
+4.1, Formulation of the QP problem
+
+Defining the decision variables vectors:
+\begin{align}
+  \dot{X}_\text{z}^k&=(\dot{x}_\text{z}^k, \dots, \dot{x}_\text{z}^{k+N-1})^T \\
+  \dot{Y}_\text{z}^k&=(\dot{y}_\text{z}^k, \dots, \dot{y}_\text{z}^{k+N-1})^T \\
+  \dot{Z}_\text{z}^k&=(\dot{z}_\text{z}^k, \dots, \dot{z}_\text{z}^{k+N-1})^T
+\end{align}
+QP problem:
+\begin{align*}
+  \min_{\dot{X}_\text{z}^k, \dot{Y}_\text{z}^k, \dot{Z}_\text{z}^k}
+      &\sum_{i=1}^N
+      \biggl[
+          (\dot{x}_z^{k+i})^2 +
+          (\dot{y}_z^{k+i})^2 +
+          (\dot{z}_z^{k+i})^2 + \\
+          &\beta \biggl(
+              (x_z^{k+i} - x_f^{k+i})^2 +
+              (y_z^{k+i} - y_f^{k+i})^2 +
+              (z_z^{k+i} - z_f^{k+i})^2
+          \biggr)
+      \biggr]\\
+      \textrm{s.t. } &\textrm{ZMP constraint \eqref{eq:zmp-constraint-3d}} \\
+      &\textrm{stability constraints \eqref{eq:stability-constraint-xdot},
+          \eqref{eq:stability-constraint-zdot}}
+\end{align*}
+where the cost function includes the decision variables for regularization 
+purposes and a term which attempts to bring the ZMP to patch level whenever 
+possible (TODO: actually to center of the footstep).
+
+4.2. Algorithm
+
+Todo.
 
 \section{BHuman implementation}
 BHuman + NAO.
