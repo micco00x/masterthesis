@@ -1,6 +1,7 @@
 \chapter{Variable Height CoM IS-MPC}
+\label{ch:vh-com-is-mpc}
 Before describing in detail the model \cite{SYROCO18} that allows humanoid 
-robots to walk on uneven terrain (\textit{World of Stairs} in this case),
+robots to walk on uneven terrain (in this case \textit{World of Stairs}),
 it is important to introduce the notation and 
 to make an overview of the previous works.
 Differently from manipulators, which are fixed to the ground, humanoids need 
@@ -398,5 +399,11 @@ in order to keep computation within the sampling time of the kinematic
 controller, the rotation matrix of the ZMP constraint described in Eq.
 \eqref{eq:zmp-constraint-3d} has been neglected. This does not create any
 problem if the size of the box is small enough to stay within the poyhedral 
-cone regardless of the rotation of the feet.
+cone regardless of the rotation of the feet. The MPC hyperparameters have been 
+set in the following way: $\omega=6.68 {\rm s}^{-1}$,
+the step duration $T_s=0.48 {\rm s}$ of which $t_{\rm SS}=0.30 {\rm s}$ of
+single support and 
+$t_{\rm DS}=0.18 {\rm s}$ of double support. The size of the box constraint have 
+been set to $\tilde{d}_x^{\rm z}=0.05 {\rm m}, \tilde{d}_y^{\rm z}=0.05 {\rm m},
+\tilde{d}_z^{\rm z}=0.05 {\rm m}$.
 
