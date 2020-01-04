@@ -16,6 +16,9 @@
 \definecolor{gray}{gray}{0.4}
 \newcommand{\bs}{\textbackslash}
 
+% Algorithms:
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+
 % Commands for the titlepage
 \title{Planning and Executing Humanoid Gaits\\in a World of Stairs}
 \author{Michele Cipriano}
@@ -219,7 +222,8 @@ In the following dummy text you can observe the usage of \texttt{\bs mnote} comm
 % bibliography
 \cleardoublepage
 \phantomsection
-\bibliographystyle{sapthesis} % BibTeX style
+%\bibliographystyle{sapthesis} % BibTeX style
+\bibliographystyle{unsrt}
 \bibliography{bibliography} % BibTeX database without .bib extension
 
 \end{document}
