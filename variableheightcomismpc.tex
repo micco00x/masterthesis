@@ -29,7 +29,8 @@ the ZMP and the position of the CoM. Assuming that the humanoid robot is walking
 on flat ground (hence the gravity acceleration components on $x$ and $y$ are 
 zero) and neglecting the angular momentum around the CoM, the ZMP can be 
 anywhere along the line connecting the CoP (located on the piece of surface 
-upon which the support foot is placed) and the CoM, it is possible
+upon which the support foot is placed) and the CoM (Fig. \ref{fig:lipm-robot}),
+it is possible
 \cite{kajita:intro-humanoid-robotics} to obtain the dynamics of the CoM:
 \begin{align}
   \ddot{x}_c &= \frac{\ddot{z}_c + g}{z_c - z_z} (x_c - x_z) \\
@@ -39,7 +40,14 @@ upon which the support foot is placed) and the CoM, it is possible
 where $g$ is the gravity acceleration, $f_z$ is the z-component of the ground
 reaction force, acting as an external input, and $m$ is the total mass of
 the humanoid robot.
-
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/LIPM_robot.pdf}
+    \caption{When walking on flat ground, or more in general on
+        piecewise-horizontal ground as in the figure, the ZMP can be anywhere 
+        between the line connecting the CoP and the CoM.}
+    \label{fig:lipm-robot}
+\end{figure}
 The condition for maintaining equilibrium is that CoP is internal to the 
 support polygon. Since the CoP, the CoM and the ZMP are colinear, as shown in 
 Fig. \ref{fig:balance3d}, the condition is equivalent to the ZMP being internal
@@ -172,8 +180,14 @@ the pose of the support foot, hence, $(x_f^j, y_f^j, \theta_f^j)$.
 In double support case, $(x_f^{k+i}, y_f^{k+i}, \theta_f^{k+i})$ gradually
 slide from the position 
 and orientation of the previous support foot to those of the next, as shown 
-in Fig. TODO (SYROCO FIG. 3). 
-
+in Fig. \ref{fig:double-support}. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/double_support.pdf}
+    \caption{The ZMP constraint moves from a support foot to the following 
+        one during double support phase.}
+    \label{fig:double-support}
+\end{figure}
 The expression of the ZMP constraint in 2D can be written as:
 \begin{equation}
   \label{eq:zmp-constraint-2d}
@@ -261,9 +275,15 @@ Similarly to the 2D case, the box constraint is kept fixed during
 single support, while during double support the box 
 slides linearly from its position around the previous support foot to its 
 position around the next support foot, thus, always remaining within the 
-polyhedral cone which defines the ZMP balance constraint
-(TODO: Fig. 5 SYROCO18).
-
+polyhedral cone which defines the ZMP balance constraint, as shown in Fig.
+\ref{fig:double-support3D}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/double_support3D.pdf}
+    \caption{The ZMP box constraint moves from a support foot to the following 
+        one during double support phase.}
+    \label{fig:double-support3D}
+\end{figure}
 \subsection{Stability constraint}
 \label{sec:mpc-stability-constraint}
 As previously seen, the motion model
