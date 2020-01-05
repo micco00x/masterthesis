@@ -1,8 +1,35 @@
 \chapter{Elevation Map Generation}
-elevation\_mapping (ROS) \cite{Fankhauser2018ProbabilisticTerrainMapping}
+When dealing with robot locomotion, the representation of the environment plays 
+a fundamental role. It is, in fact, extremely important to properly
+understand the structure of the world in order to safely make the robot move,
+avoiding obstacles and dangerous zones, and to make it successfully complete 
+its tasks. The world that surrounds the robot can be represented in many 
+different ways; it is important to choose a proper representation to keep 
+computational costs low and make to locomotion realizable.
+
+In \textit{World of Stairs} scenarios, introduced in the previous chapter, the 
+most efficient way to represent environments is by using elevation maps.
+An elevation map is a grid that contains for each coordinate $(x, y)$ of the 
+world its respective coordinate $z$. Hence, it can be seen as a function 
+$\mathcal{M}_z$ such that, for each element $i$ of the grid,
+$z_i = \mathcal{M}_z(x_i, y_i)$. This kind of representation allows the 
+development of planners that quickly find plans to make robots move from a
+position to another inside the world. 
+
+This chapter introduces \texttt{elevation\_mapping}
+\cite{Fankhauser2018ProbabilisticTerrainMapping}, the framework used in this 
+thesis to generate elevation maps, which allow NAO to navigate in unknown 
+environments (more precisely in \textit{World of Stairs} environments);
+the ASUS Xtion Pro, an RGB-D sensor equipped on top of NAO, which has been 
+used to send depth informaton to \texttt{elevation\_mapping}; 
+the behaviour of the framework when a map is build using the ASUS Xtion Pro
+placed on the head 
+of NAO humanoid robot. The generated map is the one used in the experiment 
+TODO and it is used by the footstep planner (Chapter
+\ref{ch:rrt-based-footstep-planning}) to make NAO climb the stairs.
 
 \section{Framework}
-Todo (overview of elevation\_mapping).
+Todo (overview of elevation\_mapping). ROS.
 
 \subsection{Definitions}
 Todo (RFs).
@@ -14,7 +41,7 @@ Todo (range measurements + robot motion).
 Todo.
 
 \section{ASUS Xtion Pro}
-xtion (RGBD camera)
+xtion (RGBD camera). ROS.
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{figures/asus-xtion-pro.jpeg}
