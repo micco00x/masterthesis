@@ -149,6 +149,66 @@ an obstacle that can not be climbed by NAO because of short legs.
 \section{Stair Climbing in Unknown Environment}
 Stair climbing (unknown environment). Planner + \texttt{elevation\_mapping}.
 \begin{figure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/unknown-env/video/01.png}
+    \caption{Starting position}
+    \label{fig:exp:unkenv:frame1}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/unknown-env/video/02.png}
+    \caption{First step}
+    \label{fig:exp:unkenv:frame2}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/unknown-env/video/03.png}
+    \caption{Second step}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/unknown-env/video/04.png}
+    \caption{Third step}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/unknown-env/video/05.png}
+    \caption{Fourth step}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/unknown-env/video/06.png}
+    \caption{Fifth step}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/unknown-env/video/07.png}
+    \caption{Seventh step}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/unknown-env/video/08.png}
+    \caption{Eighth step}
+  \end{subfigure} \caption{The figures show the motion of the robot
+      for the scenario ``Stair Climbing (Unknown Environment)''.
+      The robot starts at 20 cm 
+      from the first staircase (Fig. \ref{fig:exp:unkenv:frame1}). Before 
+      starting the motion (Fig. \ref{fig:exp:unkenv:frame2}), an
+      elevation map is built by the \texttt{elevation\_mapping} framework
+      (Chapter \ref{ch:elevation-map-generation}),
+      which receives the depth frames from the ASUS Xtion Pro placed 
+      on top of the robot. The elevation map is sent to the planner, which 
+      generates a footstep plan (Chapter \ref{ch:rrt-based-footstep-planning}).
+      The footstep plan is then sent to the 
+      robot, which executes the motion by using the Variable Height CoM
+      IS-MPC (Chapter \ref{ch:vh-com-is-mpc}). The robot correctly manages to 
+      climb the stairs without colliding with the staircases. Each staircase 
+      has a height of 2 cm.}
+  \label{fig:experiments:unkenv:videoframes}
+\end{figure}
+
+\begin{figure}
     \centering
     \includegraphics[width=0.95\textwidth]
         {figures/experiments/unknown-env/footstep-plan.pdf}
