@@ -338,14 +338,15 @@ The robot would, in fact, not climb it correctly because of its
 physical limitations.
 The elevation map used in this experiment has been manually generated.
 
+The planner generates a plan of 31 steps (Fig.
+\ref{fig:experiments:obstacle-avoidance:footstep-plan}) in 70 ms
+(Table \ref{table:rrt-stats}). The 
+corresponding tree in shown in Fig. 
+\ref{fig:experiments:obstacle-avoidance:rrt-tree} and it has size 488.
 Fig. \ref{fig:experiments:obstacle-avoidance:videoframes} shows the robot
 moving inside the environment from its initial position 
 to the goal region (a circle of radius 10 cm 
 with center at the position of the ball).
-The planner generates a plan of 31 steps (Fig.
-\ref{fig:experiments:obstacle-avoidance:footstep-plan}) in 70 ms. The 
-corresponding tree in shown in Fig. 
-\ref{fig:experiments:obstacle-avoidance:rrt-tree} and it has size 488.
 
 Since the planner 
 is based on RRT, the generated plan is not optimal. It is, in fact,
@@ -418,7 +419,43 @@ of RRT* \cite{rrtstar}.
 \end{figure}
 
 \section{Stair Climbing in Unknown Environment}
-Stair climbing (unknown environment). Planner + \texttt{elevation\_mapping}.
+The last experiment introduces \texttt{elevation\_mapping} (Chapter 
+\ref{ch:elevation-map-generation}) into the project. The aim is to test the 
+behaviour of the framework in an unknown \textit{World of Stairs} environment.
+The idea is to generate a map autonomously exploiting the depth sensor of the 
+ASUS Xtion Pro camera, which has been put on top of NAO humanoid robot.
+The generated map is sent to the footstep planner described in Chapter 
+\ref{ch:rrt-based-footstep-planning} which is in charge of generating a 
+plan that brings the robot to a predefined goal region. This goal region is 
+placed on top of a stairway, so that the robot must climb the stairs in order 
+to complete the task. The generation of the map has been already described in 
+Chapter \ref{ch:elevation-map-generation} and it is shown in Fig. 
+\ref{fig:onlymap-xtion-20cm}. As already discussed, once the footstep plan 
+is generated, it is sent to the robot which executes a proper motion 
+using the Variable Height CoM IS-MPC (Chapter \ref{ch:vh-com-is-mpc}).
+
+The planner generates a plan of 10 steps (Fig.
+\ref{fig:experiments:unknown-env:footstep-plan}) in 0.331s (Table
+\ref{table:rrt-stats}). The corresponding 
+tree is shown in Fig. \ref{fig:experiments:unknown-env:rrt-tree} and it has 
+size 454. Fig. \ref{fig:experiments:unkenv:videoframes} shows the robot moving
+inside the environment from its initial position
+to the goal region (a circle of radius 10 cm with center at the position
+of the ball).
+
+\begin{table}
+	\centering
+	\begin{tabular}{*{5}{c}}
+    Scenario & Tree Size & Solution Size & Runtime\\
+		\hline
+    Obtacle Avoidance & 488 & 31 & 70 ms \\
+    Stair Climbing (Unknown Environment) & 454 & 10 & 331 ms
+	\end{tabular}
+  \caption{Performances of the planner on different scenarios. All the 
+      experiment have been performed on an Intel Core i5-5257U @ 2.70 Ghz.}
+	\label{table:rrt-stats}
+\end{table}
+
 \begin{figure}
   \begin{subfigure}{0.48\textwidth}
     \includegraphics[width=\linewidth]
