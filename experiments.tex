@@ -132,6 +132,55 @@ Downstairs.
 Footstep planning with manually generated elevation mapping. Map contains 
 an obstacle that can not be climbed by NAO because of short legs.
 \begin{figure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/obstacle-avoidance/video/01.png}
+    \caption{Starting position}
+    \label{fig:exp:obs:frame1}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/obstacle-avoidance/video/02.png}
+    \caption{Moving to the left}
+    \label{fig:exp:obs:frame2}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/obstacle-avoidance/video/03.png}
+    \caption{Avoiding the obstacle}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/obstacle-avoidance/video/04.png}
+    \caption{Moving forward}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/obstacle-avoidance/video/05.png}
+    \caption{Moving towards the goal}
+    \label{fig:exp:obs:frame5}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/obstacle-avoidance/video/06.png}
+    \caption{Goal region reached}
+    \label{fig:exp:obs:frame6}
+  \end{subfigure}
+  \caption{The figures show the motion of the robot for the scenario
+      ``Obstacle Avoidance''. The robot starts in front of the obstacle
+      (Fig. \ref{fig:exp:obs:frame1}), then it moves to its left correctly
+      avoiding it (Fig. \ref{fig:exp:obs:frame2}-\ref{fig:exp:obs:frame5})
+      until it reaches the goal region (Fig. \ref{fig:exp:obs:frame6}),
+      whose center is represented by 
+      the ball. The goal region is a circle with a radius of 10 cm. 
+      Note that even if the obstacle has a height of 2 cm, NAO can not climb it 
+      because of its kinematic limitations, hence, the planner takes
+      into account the mechanical capabilities of the robot, generating a 
+      safe and realizable footstep plan.}
+  \label{fig:experiments:obstacle-avoidance:videoframes}
+\end{figure}
+
+\begin{figure}
     \centering
     \includegraphics[width=0.95\textwidth]
         {figures/experiments/obstacle-avoidance/footstep-plan.pdf}
