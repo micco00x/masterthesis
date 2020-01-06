@@ -327,8 +327,32 @@ the ZMP changes through time during this experiment.
 \end{figure}
 
 \section{Obstacle Avoidance}
-Footstep planning with manually generated elevation mapping. Map contains 
-an obstacle that can not be climbed by NAO because of short legs.
+The third experiment introduces the footstep planner described in Chapter
+\ref{ch:rrt-based-footstep-planning} into 
+the project. The aim is to test the behaviour of the planner in a simple 
+\textit{World of Stairs} scenario that contains a platform put between the
+initial position of the robot and the goal region that can not be climbed by 
+NAO. The goal of the footstep planner is those of finding a feasible 
+plan not just avoiding the obstacle, but also by not stepping onto it. 
+The robot would, in fact, not climb it correctly because of its
+physical limitations.
+The elevation map used in this experiment has been manually generated.
+
+Fig. \ref{fig:experiments:obstacle-avoidance:videoframes} shows the robot
+moving inside the environment from its initial position 
+to the goal region (a circle of radius 10 cm 
+with center at the position of the ball).
+The planner generates a plan of 31 steps (Fig.
+\ref{fig:experiments:obstacle-avoidance:footstep-plan}) in 70 ms. The 
+corresponding tree in shown in Fig. 
+\ref{fig:experiments:obstacle-avoidance:rrt-tree} and it has size 488.
+
+Since the planner 
+is based on RRT, the generated plan is not optimal. It is, in fact,
+possible to notice how the robot does not move fluidly, sometimes putting 
+the foot back and forth before changing position. This is a
+characteristic of RRT that could be changed by building the algorithm on top
+of RRT* \cite{rrtstar}.
 \begin{figure}
   \begin{subfigure}{0.48\textwidth}
     \includegraphics[width=\linewidth]
