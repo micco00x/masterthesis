@@ -60,9 +60,131 @@ robot.
   \label{fig:nao-with-xtion-2}
 \end{figure}
 
-
 \section{Simple Staircase}
-Staircase from 1cm to 5cm. Limitations of the robot.
+As mentioned before, the aim of the first experiment is to understand the kind 
+of scenario that the robot can handle. In this first setting, only the robot 
+with the Variable Height CoM IS-MPC is used. The planner and the mapper will 
+be introduced later. The footsteps are, hence, assigned manually.
+
+The first scenario, called ``Normal Staircase'' consists in placing the robot 
+in front of a staircase of 2 cm in order to make the robot climb it.
+To consider the experiment successful, NAO must climb the staircase 
+putting the whole foot on the ground at each step. Increasing the length 
+of the footstep increases the footprint area that is in contact with the ground 
+at each step during climbing. However, while shorter footsteps are easier to 
+perform, longer footsteps need to deal with the kinematic limitations of the 
+robot. It is clear from the experiment (Fig.
+\ref{fig:experiments:failing-normal-staircase:videoframes}) that the 
+larger the footstep is, the harder it is for the robot to make a step. In 
+particular, in Fig. \ref{fig:exp:fail:frame1} the robot performs a
+footstep of size 16 cm; the foot is not placed entirely on the 
+staircase (Fig. \ref{fig:exp:fail:frame2}), causing the robot to be unstable.
+This causes the robot to slip (Fig. \ref{fig:exp:fail:frame3})
+while attempting to do the second step. In the end, the robot
+falls on the floor (Fig. \ref{fig:exp:fail:frame4}) failing the assigned task.
+A longer footstep is, hence, needed in 
+order to correctly perform the motion. However, due to the short legs of the 
+robot, longer footsteps cause the robot to immediately fall. This suggests 
+that NAO is not able to climb this kind of stairway due to its kinematics and 
+that a special stairway needs to be built in order to test the behaviour of 
+the Variable Height CoM IS-MPC.
+\begin{figure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/failing-normal-staircase/video/01.png}
+    \caption{Starting position}
+    \label{fig:exp:fail:frame1}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/failing-normal-staircase/video/02.png}
+    \caption{First step}
+    \label{fig:exp:fail:frame2}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/failing-normal-staircase/video/03.png}
+    \caption{Second step}
+    \label{fig:exp:fail:frame3}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/failing-normal-staircase/video/04.png}
+    \caption{Robot falling}
+    \label{fig:exp:fail:frame4}
+  \end{subfigure}
+  \caption{The figures show the motion of the robot for the scenario ``Normal 
+      Staircase''. The robot starts just in front of the stairs (Fig.
+      \ref{fig:exp:fail:frame1}). The motion starts by placeing the first
+      footstep on the staircase (Fig. \ref{fig:exp:fail:frame2}).
+      Here, it is already clear that the motion could be unsuccessful. The foot 
+      is, in fact, not entirely in contact with the staircase. Longer footsteps 
+      make the robot immediately fall. Shorter footsteps are safer but fail to 
+      correctly place the foot. In Fig. \ref{fig:exp:fail:frame3} the robot 
+      attempts to place the other foot on the platform but it falls 
+      (Fig. \ref{fig:exp:fail:frame4}), making the robot fail its task.
+      Each staircase has a height of 2 cm.}
+  \label{fig:experiments:failing-normal-staircase:videoframes}
+\end{figure}
+
+The scenario ``Simple Staircase'' is similar to the previous one. The only 
+exception is the structure of the stairs, which has been put as in Fig.
+\ref{fig:experiments:simple-staircase:videoframes} in order to give NAO 
+some space to place the foot before climbing the staircase. Placing the 
+staircases in this way allows the robot to perform climbing with shorter 
+footsteps, avoiding kinematic limitations and correctly making it complete 
+the assigned task. With these settings, NAO is able to climb staircases
+up to 4 cm.
+Fig. \ref{fig:experiments:simple-staircase:videoframes} shows NAO climbing 
+a staircase of 3 cm. Fig. \ref{fig:experiments:simple-staircase:comzmp} show 
+how the CoM and the ZMP varies through time with respect to the position of the 
+support foot, when dealing with a staircase of 4 cm. It is important to notice 
+that both the CoM and the ZMP change their height when the robot performs a
+step. This 
+is possible because of the the Variable Height CoM IS-MPC described in Chapter 
+\ref{ch:vh-com-is-mpc}, which allows the two variable to move along the $z$ 
+axis while keeping a linear motion model like the Linear Inverted Pendulum
+\cite{DBLP:conf/humanoids/SciancaCSLO16}. This characteristic is important 
+not just in terms of the analysis of the system, but also in terms of 
+computational resources, which can be kept low as for the case of NAO.
+\begin{figure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/simple-staircase/video/01.png}
+    \caption{Starting position}
+    \label{fig:exp:simple-staircase:frame1}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/simple-staircase/video/02.png}
+    \caption{First step}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/simple-staircase/video/03.png}
+    \caption{Second step}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/simple-staircase/video/04.png}
+    \caption{Third step}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/simple-staircase/video/05.png}
+    \caption{Fourth step}
+  \end{subfigure}\hspace*{\fill}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]
+      {figures/experiments/simple-staircase/video/06.png}
+    \caption{Final position}
+  \end{subfigure} \caption{The figures show the motion of the robot for the 
+      scenario ``Simple Staircase (3 cm)''. The robot start just in front of the 
+      stairs (Fig. \ref{fig:exp:simple-staircase:frame1}), then it places 
+      each step one in front of the other without colliding with the staircases,
+      safely climbing the stairway. Each staircase has a height of 3 cm.}
+  \label{fig:experiments:simple-staircase:videoframes}
+\end{figure}
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]
@@ -70,7 +192,7 @@ Staircase from 1cm to 5cm. Limitations of the robot.
   \includegraphics[width=\textwidth]
       {figures/experiments/simple-staircase/xz-plot-4cm.pdf}
   \caption{The plots show how the CoM and the ZMP vary with respect to the
-		footsteps in the scenario ``Simple Staircase''.
+		footsteps in the scenario ``Simple Staircase (4 cm)''.
     The green boxes represent the footsteps.}
   \label{fig:experiments:simple-staircase:comzmp}
 \end{figure}
