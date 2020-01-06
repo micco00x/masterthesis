@@ -1,7 +1,65 @@
 \chapter{Experiments}
 \label{ch:experiments}
-\section{NAO}
-Brief description of NAO v5 (which is running BHuman).
+
+To test the behaviour of the whole project, multiple experiments have been 
+performed. In particular, different scenario and test cases have been designed 
+in order to study in detail the functionalities of the robot and each program.
+As previously introduced, the humanoid robot used for the experiments of this 
+thesis is NAO \cite{NAOdesign}, which has been equipped with an ASUS Xtion 
+Pro RGB-D camera \cite{ASUSXtionProWebsite}, placed on top of its head.
+As mentioned in the first chapter, the camera communicates with
+\texttt{elevation\_mapping} (Chapter \ref{ch:elevation-map-generation}),
+which creates a representation of the environment
+called elevation map, which is used by the footstep planner, described in 
+Chapter \ref{ch:rrt-based-footstep-planning}, to generate a safe and feasible 
+plan for the robot. The footsteps are sent to the robot, which runs an 
+implementation of the Variable Height CoM Intrinsically Stable MPC (Chapter 
+\ref{ch:vh-com-is-mpc}) that allows the robot to correctly performe the 
+desired motion, making it navigate in a \textit{World 
+of Stairs} environment.
+
+The experiments have been performed by initially checking the real capabilities 
+of the robot, making it first climb a single staircase and then a stairway 
+composed of multiple staircases, in order to better understand 
+the kind of scenario that NAO can handle. At this point only the MPC is 
+used, assigning the footsteps manually. Then, the footstep planner is 
+introduced into the project, making NAO navigate autonomously from its initial 
+position to a goal region, given an elevation map of the environment which has 
+been manually created. In the end, NAO is equipped with an ASUS Xtion Pro 
+camera. This allows to introduce \texttt{elevation\_mapping} to the project,
+generating autonomously elevation maps, making NAO able to move in 
+a \textit{World of Stairs} environment which is not known a priori,
+correctly climbing the stairs in order to reach a desired position.
+
+\section{NAO and Computer Settings}
+The NAO v5 humanoid robot (Fig: \ref{fig:nao-with-xtion-2}), developed by 
+Softbank, is 57 cm tall and weights 5.4 kg. It is equipped with an Intel ATOM 
+Z530 processor which has a frequencly of 1.6 Ghz, 1 GB of RAM and 2 GB of 
+flash storage. It has 25 DoF, 7 touch sensors located on the head, the hands 
+and the feet, two internal cameras, 4 microphones, a speaker, sonar and IMU 
+sensors. The framework used for the experiments, which has been installed on 
+the robot, is BHuman \cite{BHumanCodeRelease2018}, which simplifies the 
+development of on board algorithms by organizing the framework in modules.
+When using the full settings, NAO is equipped with an ASUS Xtion Pro RGB-D
+camera,
+which is connected to an external computer via a USB cable. This external 
+computer communicates with NAO via an ethernet cable through TCP.
+Both \texttt{elevation\_mapping} and the footstep planner run on the external 
+computer, which is equipped with an Intel Core i5-5257U with 2.70 GHz
+base frequency and 16 GB of RAM. The Variable Height CoM IS-MPC runs on the 
+robot. 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/NAO-with-xtion-2.JPEG}
+  \caption{The figure shows NAO v5 humanoid robot, the platform
+      used for the experiments of this thesis, equipped with an ASUS Xtion
+      Pro RGB-D camera. The camera is connected via USB to an external 
+      computer which runs \texttt{elevation\_mapping} and the footstep 
+      planner. The external computer communicates with NAO through an 
+      ethernet cable using TCP.}
+  \label{fig:nao-with-xtion-2}
+\end{figure}
+
 
 \section{Simple Staircase}
 Staircase from 1cm to 5cm. Limitations of the robot.
