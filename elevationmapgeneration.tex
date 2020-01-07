@@ -131,7 +131,15 @@ expensive task, it is performed in parallel to the data acquisition process and
 it is run at a low frequency~(1 Hz).
 
 \section{ASUS Xtion Pro}
-xtion (RGBD camera). ROS.
+The camera (Fig. \ref{fig:asus-xtion-pro}) used in this thesis is an
+ASUS Xtion Pro \cite{ASUSXtionProWebsite},
+which is equipped with a depth sensor, used to generate the height measurements
+sent to \texttt{elevation\_mapping}. The communication between the camera and 
+the mapping framework is handled by ROS.
+ASUS Xtion Pro works up to a resolution of $640\times480$
+at 30 fps. Its working range is from 0.5m up to 3.5m. The camera has been 
+calibrated with a tool called \texttt{camera\_calibration}
+\cite{cameracalibrationros}.
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{figures/asus-xtion-pro.jpeg}
