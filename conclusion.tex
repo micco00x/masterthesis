@@ -1,12 +1,29 @@
 \chapter{Conclusion}
 \label{ch:conclusion}
 \section{Results}
-Brief recap of the work and recaps.
+This thesis presents an architecture that integrates mapping, planning and 
+control to generate humanoid gaits in \textit{World of Stairs} unknown 
+environments. The use of \texttt{elevation\_mapping}
+\cite{Fankhauser2018ProbabilisticTerrainMapping} together with a depth
+sensor allows the robot to represent the surrouding environment as a map that
+can be used by a RRT-based footstep planning module \cite{ECC19}
+to generate a sequence
+of footsteps. The Variable-Height CoM IS-MPC \cite{SYROCO18} 
+has been implemented on NAO
+humanoid robot upon the BHuman framework and the whole architecture has been
+tested on multiple scenarios.
 
 \section{Future Works}
-What's next: tracker -> makes it possible to continuously build the map with 
-elevation\_mapping -> replanning -> makes it possible to move in whatever 
-environment (World of Stairs).
-
-Rough environments?
+The current architecture does not include a localization module, limiting the
+potentialities of the robot. Localizing the robot inside the environment would,
+in fact, provide a precise configuration of the humanoid, enabling 
+\texttt{elevation\_mapping} to continuously build the map during locomotion.
+A possible extension could be to develop such module using a Kalman filter
+\cite{Bloesch2013StateEstimationLeggedRobots} or a factor graph
+\cite{Wisth2019PreintegratedVelocityBiasEstimation}.
+Another possible extension of this work could be that of developing a replanning
+phase \cite{Griffin2019FootstepPlanningRoughTerrain}, allowing the robot to
+work in dynamic environments. The combination of these two could give even
+more autonomy to humanoid robots, further advancing current technology and
+allowing their introduction into our society.
 
