@@ -14,8 +14,8 @@ called elevation map, which is used by the footstep planner, described in
 Chapter \ref{ch:rrt-based-footstep-planning}, to generate a safe and feasible 
 plan for the robot. The footsteps are sent to the robot, which runs an 
 implementation of the Variable Height CoM Intrinsically Stable MPC (Chapter 
-\ref{ch:vh-com-is-mpc}) that allows the robot to correctly performe the 
-desired motion, making it navigate in a \textit{World 
+\ref{ch:vh-com-is-mpc}) that allows the robot to correctly perform the 
+desired motion, making it able to navigate in a \textit{World 
 of Stairs} environment.
 
 The experiments have been performed by initially checking the real capabilities 
@@ -47,7 +47,7 @@ computer communicates with NAO via an ethernet cable through TCP.
 Both \texttt{elevation\_mapping} and the footstep planner run on the external 
 computer, which is equipped with an Intel Core i5-5257U with 2.70 GHz
 base frequency and 16 GB of RAM. The Variable Height CoM IS-MPC runs on the 
-robot. 
+robot at 100 Hz. 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{figures/NAO-with-xtion-2.JPEG}
@@ -136,13 +136,13 @@ footsteps, avoiding kinematic limitations and correctly making it complete
 the assigned task. With these settings, NAO is able to climb staircases
 up to 4 cm.
 Fig. \ref{fig:experiments:simple-staircase:videoframes} shows NAO climbing 
-a staircase of 3 cm. Fig. \ref{fig:experiments:simple-staircase:comzmp} show 
+a staircase of 3 cm. Fig. \ref{fig:experiments:simple-staircase:comzmp} shows 
 how the CoM and the ZMP varies through time with respect to the position of the 
 support foot, when dealing with a staircase of 4 cm. It is important to notice 
 that both the CoM and the ZMP change their height when the robot performs a
 step. This 
 is possible because of the the Variable Height CoM IS-MPC described in Chapter 
-\ref{ch:vh-com-is-mpc}, which allows the two variable to move along the $z$ 
+\ref{ch:vh-com-is-mpc}, which allows the two variables to move along the $z$ 
 axis while keeping a linear motion model like the Linear Inverted Pendulum
 \cite{DBLP:conf/humanoids/SciancaCSLO16}. This characteristic is important 
 not just in terms of the analysis of the system, but also in terms of 
@@ -437,7 +437,14 @@ using the Variable Height CoM IS-MPC (Chapter \ref{ch:vh-com-is-mpc}).
 
 The planner generates a plan of 10 steps (Fig.
 \ref{fig:experiments:unknown-env:footstep-plan}) in 0.331s (Table
-\ref{table:rrt-stats}). The corresponding 
+\ref{table:rrt-stats}). Note that the runtime of this experiment is slower
+than the previous one because of the noise contained in the elevation map, 
+which causes the planner to discard many configurations since they do not
+satisfy requirement R2 of the footstep planner
+(Chapter \ref{ch:rrt-based-footstep-planning}). In this experiment the 
+requirement R2 has been relaxed allowing a maximum difference of 7 mm between
+the $z$ coordinate of the footstep and the height of a cell in the map.
+The corresponding 
 tree is shown in Fig. \ref{fig:experiments:unknown-env:rrt-tree} and it has 
 size 454. Fig. \ref{fig:experiments:unkenv:videoframes} shows the robot moving
 inside the environment from its initial position
@@ -450,9 +457,12 @@ of the ball).
     Scenario & Tree Size & Solution Size & Runtime\\
 		\hline
     Obtacle Avoidance & 488 & 31 & 70 ms \\
-    Stair Climbing (Unknown Environment) & 454 & 10 & 331 ms
+    Stair Climbing in Unknown Environment & 454 & 10 & 331 ms
 	\end{tabular}
-  \caption{Performances of the planner on different scenarios. All the 
+  \caption{Performances of the planner on different scenarios. Note that
+	    even if the size of the trees are similar, the runtime of ``Stair
+			Climbing in Unknown Environment'' is slower due to noise in the 
+			elevation map. All the 
       experiment have been performed on an Intel Core i5-5257U @ 2.70 Ghz.}
 	\label{table:rrt-stats}
 \end{table}
@@ -500,7 +510,7 @@ of the ball).
       {figures/experiments/unknown-env/video/08.png}
     \caption{Eighth step}
   \end{subfigure} \caption{The figures show the motion of the robot
-      for the scenario ``Stair Climbing (Unknown Environment)''.
+      for the scenario ``Stair Climbing in Unknown Environment''.
       The robot starts at 20 cm 
       from the first staircase (Fig. \ref{fig:exp:unkenv:frame1}). Before 
       starting the motion (Fig. \ref{fig:exp:unkenv:frame2}), an

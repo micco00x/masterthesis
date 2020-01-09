@@ -43,11 +43,11 @@ This allows to avoid problems related to drift in the state estimation
 which would cause the maps 
 to be inconsistent and not accurate enough to be used for locomotion.
 
-The framework represent the map as a grid, providing for each cell a 
+The framework represents the map as a grid, providing for each cell a 
 probabilistic distribution of the height of the terrain in the 
 corresponding position. The map is updated using range measurements, provided 
-by a sensor mounted of the robot, and the motion of the robot,
-provided by a localization module such as a Kalman Filter.
+by a sensor mounted on the robot, and the motion of the robot,
+provided by a localization module such as a Kalman filter.
 The program supports dynamic environments and it is built in C++, providing 
 a ROS \cite{ros-melodic} interface which makes it simple to be integrated with
 external sensors and other programs. \texttt{elevation\_mapping} is built 
@@ -107,7 +107,7 @@ $\mathcal{N}(\hat{h}^{+}, \sigma_h^{2+})$. The filter is updated only if the
 new measurement is not too far away (in terms of Mahalanobis distance)
 from the current estimate.
 
-The height estimate of each cell need to be updated also during motion in 
+The height estimate of each cell needs to be updated also during motion in 
 order to take  
 into account the uncertainty of the motion itself. To speed up the process,
 each cell $i$ is extended with a spatial covariance matrix $\Sigma_{P_i}$ that,
@@ -169,7 +169,7 @@ front of a stairway. The idea is to position the camera towards the stairs in
 order to generate an elevation map accurate enough to be used by a footstep
 planner (Chapter \ref{ch:rrt-based-footstep-planning}). Given the pose of the 
 camera, which is sent to \texttt{elevation\_mapping} together with the depth 
-information of the camera, it possible to quickly generate a map.
+information of the camera, it is possible to quickly generate a map.
 Of course, the area underneath the robot can not be seen by the camera. That is 
 why a ``safe zone'' is manually added to the final elevation map before 
 sending it to the planner.
@@ -208,7 +208,7 @@ unknown environment.
   \centering
   \includegraphics[width=\textwidth]{figures/onlymap-xtion-20cm.pdf}
   \caption{Elevation map build by \texttt{elevation\_mapping} for the scenario 
-      ``Stair Climbing (Unknown Environment)'' described in section 
+      ``Stair Climbing in Unknown Environment'' described in section 
       \ref{sec:stair-climbing-unkenv}.}
   \label{fig:onlymap-xtion-20cm}
 \end{figure}

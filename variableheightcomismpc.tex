@@ -225,12 +225,12 @@ Eq. \eqref{eq:zmp-constraint-2d} must be imposed for $i = 1, \dots, N$.
 
 In the 3D case, the ZMP is allowed to leave the ground in order to
 generate CoM motions along the $z$ axis as well.
-As previously discussed, balance condition requires ZMP to remain inside
-polyhedral cone defined by the support polygon and CoM
-(Fig. \ref{fig:balance3d}. When ZMP is allowed to move vertically,
+As previously discussed, balance condition requires ZMP to remain inside the
+polyhedral cone defined by the support polygon and the CoM
+(Fig. \ref{fig:balance3d}). When the ZMP is allowed to move vertically,
 the constraint becomes nonlinear. In order to remove nonlinearity it is 
-possible to consider a subregion of the polyhedral cone, for example a box
-constraint, as shown in Fig. \ref{fig:polyhedral-cone-side-view}:
+possible to consider a subregion of the polyhedral cone, for example a box,
+as shown in Fig. \ref{fig:polyhedral-cone-side-view}:
 \begin{equation}
   \label{eq:zmp-constraint-3d}
   -\frac{1}{2}
@@ -404,7 +404,8 @@ cone regardless of the rotation of the feet. The MPC hyperparameters have been
 set in the following way: $\omega=6.68 {\rm s}^{-1}$,
 the step duration $T_s=0.48 {\rm s}$ of which $t_{\rm SS}=0.30 {\rm s}$ of
 single support and 
-$t_{\rm DS}=0.18 {\rm s}$ of double support. The size of the box constraint have 
+$t_{\rm DS}=0.18 {\rm s}$ of double support, $T_h=0.96$, $N=16$.
+The size of the box constraint have 
 been set to $\tilde{d}_x^{\rm z}=0.05 {\rm m}, \tilde{d}_y^{\rm z}=0.05 {\rm m},
 \tilde{d}_z^{\rm z}=0.05 {\rm m}$.
 

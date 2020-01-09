@@ -39,18 +39,18 @@ in Japanese. The most famous humanoid robot is probabily ASIMO
 \ref{fig:asimo}). Its development started in the
 1980s and it was preceded by many different version before being presented in
 2000.
-The last version of ASIMO is tall 130 cm and is able to recognize objects,
+The last version of ASIMO is 130 cm tall and is able to recognize objects,
 gestures, sounds and 
 faces, making it able to interact with humans. It is equipped with multiple 
-sensors such as laser and infrared that allowed it to autonomously 
-navigate. ASIMO is able to walk and run up to a speed of 9 km/h with an 
+sensors such as laser and infrared that allow it to navigate autonomously. 
+ASIMO is able to walk and run up to a speed of 9 km/h with an 
 autonomy of one hour. Another very famous robot is NAO \cite{NAOdesign},
 which development has been started by Aldebaran and continued by Softbank after 
 its acquisition. NAO (Fig. \ref{fig:nao-v6}) is the official robot used in 
 the RoboCup \cite{Kitano1997RoboCup} Standard Platform League, an international
 competition that consists in a soccer tournament where the teams are composed 
-of 5 robots. The goal of the RoboCup is that of winning against a FIFA
-World Cup winner team by 2050. Most recent and advanced humanoid robot 
+of 5 robots. The goal of RoboCup is that of winning against a FIFA
+World Cup winner team by 2050. Most recent and advanced humanoid robots 
 includes iCub \cite{Sandini2007iCub}, shown in Fig. \ref{fig:iCub}, designed 
 by the RoboCub Consortium and built by Italian Institute of Technology,
 with the idea of being a research platform for cognitive robotics;
@@ -176,24 +176,24 @@ module is correctly executed.
 The purpose of localization is to provide the pose of the robot with respect
 to the world. Localizing accurately is of fundamental importance in order to
 guarantee that the robot behaves in a correct way during the execution of its
-tasks. The introduction of advances sensors, such as IMU (accelerometer,
+tasks. The introduction of advanced sensors, such as IMU (accelerometer,
 gyroscope), RGB-D cameras, LIDAR and sonars, makes it possible to observe
 the surrouding environment and consequently to localize the robot. Many
-different techniques could be for robot localization, such as
+different techniques can be used for robot localization, such as
 particle filters \cite{Hornung2010HumanoidRobotLocalization}, Extended
 Kalman Filters \cite{Oriolo2015HumanoidOdometricLocalization} and V-SLAM
 \cite{Tanguy2019MPCWithDenseVisualSLAM}.
 
 The purpose of mapping is to provide a representation of the environment that
 can be used to make the robot navigate. A mapping program should be able to
-recreate the world with enough details to make locomotion safe, moreover
+recreate the world with enough details to make locomotion safe. Moreover,
 the implementation should be efficient enough to provide the map in real-time.
 These characteristics are essential to make the robot truly autonomous.
 The most used representations are elevation maps
 \cite{Siciliano2016HandbookRobotics}, which store the map as a grid such that
 for each point $(x, y, z)$ on the surface there exists a cell $(x, y)$ in the 
 grid that stores the corresponding height $z$, and OctoMaps
-\cite{Hornung2013OctoMap}, an representation based on octrees that efficiently
+\cite{Hornung2013OctoMap}, a representation based on octrees that efficiently
 determines if a point in space is occupied or free.
 
 \subsection{Planning}
@@ -239,7 +239,7 @@ level.
 The goal of the thesis is that of studying humanoid robot locomotion in a
 world known as \textit{World of Stairs}, a particular uneven ground composed
 by horizontal patches located at different heights \cite{ECC19}. The idea is
-that of making NAO humanoid robot walking in a complex scenario, making it
+that of making NAO humanoid robot walk in a complex scenario, making it
 climb stairs and avoid obstacles. The robot needs to autonomously perceive
 the surrouding world, create a representation of the environment, generate
 a plan that allows the robot to safely reach a specified region of the world
@@ -273,13 +273,13 @@ RRT-based footstep planner to work in a real environment with NAO and
 introducing \texttt{elevation\_mapping} (directly extending the block scheme
 of \cite{ECC19}) in order to generate an elevation map of the terrain,
 making NAO able to execute gaits in a \textit{World of Stairs} unknown
-environment.
+environments.
 
 Chapter \ref{ch:elevation-map-generation} introduces
 \texttt{elevation\_mapping}, describing the framework and its integration with
 the camera, the planner and the robot. Chapter
 \ref{ch:rrt-based-footstep-planning} describes the RRT-based footstep planner
-introduced in \cite{ECC19}, formulating the problem and the algorithm and
+introduced in \cite{ECC19}, formulating the problem, the algorithm and
 discussing its integration with NAO. Chapter \ref{ch:vh-com-is-mpc} describes
 the Variable-Height CoM IS-MPC and the implementation on the BHuman framework
 \cite{BHumanCodeRelease2018}. Chapter \ref{ch:experiments} presents the
