@@ -15,21 +15,21 @@ formulation of the problem should be given.
 As introduced before, an 
 elevation map is a proper choice for the representation of the scenarios 
 described by \textit{World of Stairs}, since it is efficient to store and to 
-query. Let's denote the map by $\mathcal{M}_z$. The height from the ground of
+query. Let the map be denoted by $\mathcal{M}_z$. The height from the ground of
 a cell having coordinate $(x, y)$ is $z = \mathcal{M}_z(x, y)$.
 
 Given $\mathcal{M}_z$, the goal of the footstep planner (offline) is to find 
 a feasible sequence of footsteps $\{\bff^j\}$ which leads to a desired location 
 $\mathcal{G}$, together with the corresponding swing foot trajectories
-$\{\bfp_{\rm {swg}}^j\}$. Let's denote $\bff^j = (x_{\rm f}^j, y_{\rm f}^j,
-z_{\rm f}^j, \theta_{\rm f}^j)^T$ as the pose of the $j$-th footstep, 
+$\{\bfp_{\rm {swg}}^j\}$. Let $\bff^j = (x_{\rm f}^j, y_{\rm f}^j,
+z_{\rm f}^j, \theta_{\rm f}^j)^T$ be the pose of the $j$-th footstep, 
 with $x_{\rm f}^j, y_{\rm f}^j, z_{\rm f}^j$ position of the footstep and 
 $\theta_{\rm f}^j$ yaw orientation of the footstep. Note that in the scenarios 
 represented by \textit{World of Stairs} the roll and pitch angles of the 
 footsteps are always zero.
 
-In order to make the footstep plan feasible, let's introduce the following 
-requirements:
+In order to make the footstep plan feasible, the following 
+requirements are introduced:
 \begin{itemize}
   \item[R1] The height variation between two consecutive footsteps is with 
       a maximum range: $|z_{\rm f}^j - z_{\rm f}^{j-1}| \le \Delta z_{\max}$.

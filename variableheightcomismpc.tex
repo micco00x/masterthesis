@@ -20,7 +20,8 @@ the generation of the CoM reference trajectory, like the Preview Control
 \cite{Kajita2003BipedWP} and the Model Predictive Control
 \cite{wieber:inria-00390462}.
 Before discussing the LIP and extending it to the Variable Length Inverted
-Pendulum, let's discuss the 3D motion model of the CoM reminding that the CoP
+Pendulum, the 3D motion model of the CoM is introduced. It is important to
+remind that the CoP
 (Center of Pressure) in case of flat ground is the point of application of
 the ground reaction force.
 
@@ -102,7 +103,7 @@ described by Fig. \ref{fig:balance3d}.
 \section{MPC Formulation}
 Before describing an MPC scheme for gait generation based on the above 
 equations, it is important to notice that all of them include an unstable 
-subsystem. For example, let's consider Eq. \eqref{eq:com-dynamics-x}. It is 
+subsystem. For example, considering Eq. \eqref{eq:com-dynamics-x}, it is 
 possible to decompose the system into a stable and an unstable subsystem by 
 performing the following change of coordinates:
 \begin{align}
@@ -119,8 +120,8 @@ diverge if a certain initial condition is satisfied (discussed in section
 \ref{sec:mpc-stability-constraint}). The same 
 reasoning applies for the other two variables.
 
-Let's perform a dynamic extension and choose the control variable as the ZMP 
-velocities $\dot{x}_z, \dot{y}_z, \dot{z}_z$ rather than the ZMP itself. On the 
+Considering a dynamic extension and choose the control variable as the ZMP 
+velocities $\dot{x}_z, \dot{y}_z, \dot{z}_z$ rather than the ZMP itself, on the 
 $x$ axis, the motion model becomes:
 \begin{equation}
   \label{eq:vhcomlip-motion-model}
@@ -151,10 +152,10 @@ $x$ axis, the motion model becomes:
 The same applies for the other two axes with an additive term $g$ appearing 
 in the second equation of the dynamics along the $z$ axis.
 
-Let's consider piecewise-constant control inputs over sampling intervals of
-duration $\delta$, with a prediction horizon $T_h = N \cdot \delta$.
-Let's denote the current time instant by $t_k$ and successive instants within
-prediction horizon $t_{k+i}, i = 1, \dots, N$ by $t_{k+i}$.
+Let the control inputs be piecewise-constant over sampling intervals of
+duration $\delta$, with a prediction horizon $T_h = N \cdot \delta$, and
+let $t_k$ be the current time instant and let successive instants within
+prediction horizon be $t_{k+i}, i = 1, \dots, N$ by $t_{k+i}$.
 At a generic instant $t_j$:
 \begin{equation}
   \dot{x}_z(t) = \dot{x}_z^j, \quad t \in [t_j, t_{j+1})
@@ -167,13 +168,13 @@ $[t_j, t_{j+1}]$ is:
 
 \subsection{ZMP constraints}
 Before describing the ZMP constraints in the 3D case (Fig. \ref{fig:balance3d}),
-let's discuss the 2D case.
+the 2D case is discussed.
 
 When walking on fully horizontal ground, the robot keeps the equilibrium 
-if the ZMP remains inside the support polygon. Let's denote by
-$(x_f^j, y_f^j, \theta_f^j)$ the pose of the 
+if the ZMP remains inside the support polygon. Let
+$(x_f^j, y_f^j, \theta_f^j)$ be the pose of the 
 generic footstep within the given sequence.
-Let's use a fixed-shape moving ZMP constraint \cite{aboudonia17} to
+Let the ZMP constraint be fixed-shape moving \cite{aboudonia17} to
 enforce balance. The admissible region for ZMP at $t_{k+i}$ is centered in 
 $(x_f^{k+i}, y_f^{k+i})$ and has orientation $\theta_f^{k+i}$.
 In single support case, $(x_f^{k+i}, y_f^{k+i}, \theta_f^{k+i})$ coincide with
