@@ -6,14 +6,14 @@ understand the structure of the world in order to safely make the robot move,
 avoiding obstacles and dangerous zones, and to make it successfully complete 
 its tasks. The world that surrounds the robot can be represented in many 
 different ways; it is important to choose a proper representation to keep 
-computational costs low and make to locomotion realizable.
+computational costs low and to make locomotion realizable.
 
 In \textit{World of Stairs} scenarios, introduced in the previous chapter, the 
 most efficient way to represent environments is by using elevation maps.
 An elevation map is a grid that contains for each coordinate $(x, y)$ of the 
 world its respective coordinate $z$. Hence, it can be seen as a function 
 $\mathcal{M}_z$ such that, for each element $i$ of the grid,
-$z_i = \mathcal{M}_z(x_i, y_i)$. This kind of representation allows the 
+$z_i = \mathcal{M}_z(x_i, y_i)$. This kind of representation enables the 
 development of planners that quickly find plans to make robots move from a
 position to another inside the world. 
 
